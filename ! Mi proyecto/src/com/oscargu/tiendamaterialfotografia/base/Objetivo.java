@@ -18,5 +18,49 @@ public class Objetivo extends ProductoFotografico {
         this.tieneEstabilizador = tieneEstabilizador;
     }
 
+    public String getAlcanceLente() {
+        return alcanceLente;
+    }
+
+    public void setAlcanceLente(String alcanceLente) {
+        this.alcanceLente = alcanceLente;
+    }
+
+    public String getAperturaMax() {
+        return aperturaMax;
+    }
+
+    public void setAperturaMax(String aperturaMax) {
+        this.aperturaMax = aperturaMax;
+    }
+
+    public String getTipoMontura() {
+        return tipoMontura;
+    }
+
+    public void setTipoMontura(String tipoMontura) {
+        this.tipoMontura = tipoMontura;
+    }
+
+    public boolean isTieneEstabilizador() {
+        return tieneEstabilizador;
+    }
+
+    public void setTieneEstabilizador(boolean tieneEstabilizador) {
+        this.tieneEstabilizador = tieneEstabilizador;
+    }
+
+    @Override
+    public String toString() {
+        return "Objetivo=\n" +
+                "nombre='" + getNombre() + '\'' +
+                ", marca='" + getMarca() + '\'' +
+                ", precio='" + getPrecio() + '\'' +
+                ", stock='" + getStock() + '\'' +
+                ", alcanceLente='" + alcanceLente + '\'' +
+                ", aperturaMax='" + aperturaMax + '\'' +
+                ", tipoMontura='" + tipoMontura + '\'' +
+                ", tieneEstabilizador='" + tieneEstabilizador + '\'';
+    }
 
 }

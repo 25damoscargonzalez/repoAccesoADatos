@@ -16,5 +16,40 @@ public class Iluminacion extends ProductoFotografico {
         this.temperaturaColor = temperaturaColor;
     }
 
+    public String getTipoLuz() {
+        return tipoLuz;
+    }
+
+    public void setTipoLuz(String tipoLuz) {
+        this.tipoLuz = tipoLuz;
+    }
+
+    public int getWatios() {
+        return watios;
+    }
+
+    public void setWatios(int watios) {
+        this.watios = watios;
+    }
+
+    public String getTemperaturaColor() {
+        return temperaturaColor;
+    }
+
+    public void setTemperaturaColor(String temperaturaColor) {
+        this.temperaturaColor = temperaturaColor;
+    }
+
+    @Override
+    public String toString() {
+        return "Iluminacion=\n" +
+                "nombre='" + getNombre() + '\'' +
+                ", marca='" + getMarca() + '\'' +
+                ", precio='" + getPrecio() + '\'' +
+                ", stock='" + getStock() + '\'' +
+                ", tipoLuz='" + tipoLuz + '\'' +
+                ", watios='" + watios + '\'' +
+                ", temperaturaColor='" + temperaturaColor + '\'';
+    }
 
 }
