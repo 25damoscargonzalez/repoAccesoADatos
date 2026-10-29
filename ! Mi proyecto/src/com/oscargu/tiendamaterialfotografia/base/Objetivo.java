@@ -1,5 +1,7 @@
 package com.oscargu.tiendamaterialfotografia.base;
 
+import java.time.LocalDate;
+
 public class Objetivo extends ProductoFotografico {
     private String alcanceLente; //Distancia focal de un objetivo, medida en mm, indica cuanto zoom tiene una lente
     private String aperturaMax; //Indica cuanta luz deja pasar el objetivo hacia el sensor de la cámara
@@ -10,8 +12,8 @@ public class Objetivo extends ProductoFotografico {
 
     }
 
-    public Objetivo(String nombre, String marca, float precio, int stock, String alcanceLente, String aperturaMax, String tipoMontura, boolean tieneEstabilizador) {
-        super(nombre, marca, precio, stock);
+    public Objetivo(String nombre, String marca, float precio, int stock, LocalDate fechaCreacion, String alcanceLente, String aperturaMax, String tipoMontura, boolean tieneEstabilizador) {
+        super(nombre, marca, precio, stock, fechaCreacion);
         this.alcanceLente = alcanceLente;
         this.aperturaMax = aperturaMax;
         this.tipoMontura = tipoMontura;
@@ -57,6 +59,7 @@ public class Objetivo extends ProductoFotografico {
                 ", marca='" + getMarca() + '\'' +
                 ", precio='" + getPrecio() + '\'' +
                 ", stock='" + getStock() + '\'' +
+                ", fechaCreacion='" + getFechaCreacion() + "\'" +
                 ", alcanceLente='" + alcanceLente + '\'' +
                 ", aperturaMax='" + aperturaMax + '\'' +
                 ", tipoMontura='" + tipoMontura + '\'' +

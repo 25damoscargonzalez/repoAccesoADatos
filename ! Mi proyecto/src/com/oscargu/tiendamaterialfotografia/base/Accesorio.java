@@ -1,5 +1,7 @@
 package com.oscargu.tiendamaterialfotografia.base;
 
+import java.time.LocalDate;
+
 public class Accesorio extends ProductoFotografico {
     private String categoria; //Soporte, Transporte, Filtro Optico...
     private String materialPrincipal;
@@ -9,8 +11,8 @@ public class Accesorio extends ProductoFotografico {
 
     }
 
-    public Accesorio(String nombre, String marca, float precio, int stock, String categoria, String materialPrincipal, float pesoSoportadoKg) {
-        super(nombre, marca, precio, stock);
+    public Accesorio(String nombre, String marca, float precio, int stock, LocalDate fechaCreacion, String categoria, String materialPrincipal, float pesoSoportadoKg) {
+        super(nombre, marca, precio, stock, fechaCreacion);
         this.categoria = categoria;
         this.materialPrincipal = materialPrincipal;
         this.pesoSoportadoKg = pesoSoportadoKg;
@@ -47,6 +49,7 @@ public class Accesorio extends ProductoFotografico {
                 ", marca='" + getMarca() + '\'' +
                 ", precio='" + getPrecio() + '\'' +
                 ", stock='" + getStock() + '\'' +
+                ", fechaCreacion='" + getFechaCreacion() + "\'" +
                 ", categoria='" + categoria + '\'' +
                 ", materialPrincipal='" + materialPrincipal + '\'' +
                 ", pesoSoportadoKg=" + pesoSoportadoKg;

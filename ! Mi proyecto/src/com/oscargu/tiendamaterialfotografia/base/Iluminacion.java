@@ -1,5 +1,7 @@
 package com.oscargu.tiendamaterialfotografia.base;
 
+import java.time.LocalDate;
+
 public class Iluminacion extends ProductoFotografico {
     private String tipoLuz;
     private int watios;
@@ -9,8 +11,8 @@ public class Iluminacion extends ProductoFotografico {
 
     }
 
-    public Iluminacion(String nombre, String marca, float precio, int stock, String tipoLuz, int watios, String temperaturaColor) {
-        super(nombre, marca, precio, stock);
+    public Iluminacion(String nombre, String marca, float precio, int stock, LocalDate fechaCreacion, String tipoLuz, int watios, String temperaturaColor) {
+        super(nombre, marca, precio, stock, fechaCreacion);
         this.tipoLuz = tipoLuz;
         this.watios = watios;
         this.temperaturaColor = temperaturaColor;
@@ -47,6 +49,7 @@ public class Iluminacion extends ProductoFotografico {
                 ", marca='" + getMarca() + '\'' +
                 ", precio='" + getPrecio() + '\'' +
                 ", stock='" + getStock() + '\'' +
+                ", fechaCreacion='" + getFechaCreacion() + "\'" +
                 ", tipoLuz='" + tipoLuz + '\'' +
                 ", watios='" + watios + '\'' +
                 ", temperaturaColor='" + temperaturaColor + '\'';

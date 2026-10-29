@@ -1,5 +1,7 @@
 package com.oscargu.tiendamaterialfotografia.base;
 
+import java.time.LocalDate;
+
 public class Camara extends ProductoFotografico{
     private String tipoSensor;
     private float resolucionMpx;
@@ -10,8 +12,8 @@ public class Camara extends ProductoFotografico{
 
     }
 
-    public Camara(String nombre, String marca, float precio, int stock, String tipoSensor, float resolucionMpx, boolean esSinEspejo, String resolucionMaxVideo) {
-        super(nombre, marca, precio, stock);
+    public Camara(String nombre, String marca, float precio, int stock, LocalDate fechaCreacion, String tipoSensor, float resolucionMpx, boolean esSinEspejo, String resolucionMaxVideo) {
+        super(nombre, marca, precio, stock, fechaCreacion);
         this.tipoSensor = tipoSensor;
         this.resolucionMpx = resolucionMpx;
         this.esSinEspejo = esSinEspejo;
@@ -57,6 +59,7 @@ public class Camara extends ProductoFotografico{
                 ", marca='" + getMarca() + '\'' +
                 ", precio='" + getPrecio() + '\'' +
                 ", stock='" + getStock() + '\'' +
+                ", fechaCreacion='" + getFechaCreacion() + "\'" +
                 ", tipoSensor='" + tipoSensor + '\'' +
                 ", resolucionMpx='" + resolucionMpx + '\'' +
                 ", esSinEspejo='" + esSinEspejo + '\'' +

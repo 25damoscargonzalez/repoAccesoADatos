@@ -1,20 +1,24 @@
 package com.oscargu.tiendamaterialfotografia.base;
 
+import java.time.LocalDate;
+
 public abstract class ProductoFotografico {
     private String nombre;
     private String marca;
     private float precio;
     private int stock;
+    private LocalDate fechaCreacion;
 
     public ProductoFotografico() {
 
     }
 
-    public ProductoFotografico(String nombre, String marca, float precio, int stock) {
+    public ProductoFotografico(String nombre, String marca, float precio, int stock, LocalDate fechaCreacion) {
         this.nombre = nombre;
         this.marca = marca;
         this.precio = precio;
         this.stock = stock;
+        this.fechaCreacion = fechaCreacion;
     }
 
     public String getNombre() {
@@ -47,5 +51,13 @@ public abstract class ProductoFotografico {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }
