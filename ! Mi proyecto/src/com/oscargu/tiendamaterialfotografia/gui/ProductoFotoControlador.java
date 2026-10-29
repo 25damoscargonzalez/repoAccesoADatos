@@ -1,15 +1,19 @@
 package com.oscargu.tiendamaterialfotografia.gui;
 
 import com.oscargu.tiendamaterialfotografia.base.ProductoFotografico;
-import sun.invoke.empty.Empty;
+import util.Util;
 
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.Properties;
 
 public class ProductoFotoControlador implements ActionListener, ListSelectionListener, WindowListener {
@@ -28,23 +32,64 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
         }
 
         addActionListener(this);
+        addListSelectionListener(this);
+        addWindowListener(this);
+
+        //Marcamos por defecto el radioButton "Accesorio"
+        vista.accesorioRadioButton.doClick();
 
     }
 
-    private boolean hayCamposVacios() {
-        return false;
+    private String hayCamposVacios() {
+        String mensaje = "";
+
+        if (vista.nombreTxt.getText().isEmpty()) {
+            mensaje += "Nombre\n";
+        }
+        if (vista.marcaTxt.getText().isEmpty()) {
+            mensaje += "Marca\n";
+        }
+        if (vista.precioTxt.getText().isEmpty()) {
+            mensaje += "Precio\n";
+        }
+        if (vista.stockTxt.getText().isEmpty()) {
+            mensaje += "Stock\n";
+        }
+        if (vista.fechaCreacionDPiker.getText().isEmpty()) {
+            mensaje += "Fecha Creacion\n";
+        }
+
+        if (vista.primeraTxt.getText().isEmpty()) {
+            mensaje += vista.cambiarPrimeraLbl.getText() + "\n";
+        }
+        if (vista.segundaTxt.getText().isEmpty()) {
+            mensaje += vista.cambiarSegundaLbl.getText() + "\n";
+        }
+        if (vista.terceraTxt.getText().isEmpty()) {
+            mensaje += vista.cambiarTerceraLbl.getText() + "\n";
+        }
+        if (vista.cuartaTxt.isVisible() && vista.cuartaTxt.getText().isEmpty()) {
+            mensaje += vista.cambiarCuartaLbl.getText() + "\n";
+        }
+
+        return mensaje;
     }
 
     private void limpiarCampos() {
-        vista.primeraTextField.setText(null);
-        vista.segundaTextField.setText(null);
-        vista.terceraTextField.setText(null);
-        vista.cuartaTextField.setText(null);
+        vista.primeraTxt.setText(null);
+        vista.segundaTxt.setText(null);
+        vista.terceraTxt.setText(null);
+        vista.cuartaTxt.setText(null);
 
-        vista.nombreTextField.setText(null);
-        vista.marcaTextField.setText(null);
-        vista.precioTextField.setText(null);
-        vista.stockTextField.setText(null);
+        vista.nombreTxt.setText(null);
+        vista.marcaTxt.setText(null);
+        vista.precioTxt.setText(null);
+        vista.stockTxt.setText(null);
+        vista.fechaCreacionDPiker.setDate(null);
+
+        //Despues de limpiar los campos el cursor quedaria parpadeando en el TextField "matriculaTxt"
+        vista.nombreTxt.requestFocus(true);
+
     }
 
     public void refrescar() {
@@ -71,7 +116,7 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
     }
 
     private void addWindowListener (WindowListener listener) {
-        vista.frame.addWindowListener(listener);
+        vista.frame.addWindowListener(listener); //frame, el boton de cerrar esta en la ventanita de fuera de la ventana
     }
 
     private void cargarDatosConfiguracion() throws IOException {
@@ -95,30 +140,101 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
         String actionComand = e.getActionCommand();
         switch (actionComand) {
             case "Crear Nuevo":
-                if (hayCamposVacios()) {
+                String vacios = hayCamposVacios();
+                if (!vacios.isEmpty()) {
+                    Util.mensajeError("Los siguientes campos no pueden estar vacios = " + vacios);
+                    break;
+                }
 
+                if (modelo.existeNombreProducto(vista.nombreTxt.getText())) {
+                    Util.mensajeError("Ya existe un producto fotografico con ese nombre");
+                    break;
                 }
 
                 if (vista.accesorioRadioButton.isSelected()) {
                     modelo.altaAccesorio(
-                            vista.nombreTextField.getText(),
-                            vista.marcaTextField.getText(),
-                            vista.precioTextField.getText(),
-                            vista.stockTextField.getText(),
-                            vista.primeraTextField.getText(),
-                            vista.segundaTextField.getText(),
-                            vista.terceraTextField.getText()));
+                            vista.nombreTxt.getText(),
+                            vista.marcaTxt.getText(),
+                            Float.parseFloat(vista.precioTxt.getText()),
+                            Integer.parseInt(vista.stockTxt.getText()),
+                            vista.fechaCreacionDPiker.getDate(),
+                            vista.primeraTxt.getText(),
+                            vista.segundaTxt.getText(),
+                            Float.parseFloat(vista.terceraTxt.getText()));
                 }
-
+                else if (vista.camaraRadioButton.isSelected()) {
+                    modelo.altaCamara(
+                            vista.nombreTxt.getText(),
+                            vista.marcaTxt.getText(),
+                            Float.parseFloat(vista.precioTxt.getText()),
+                            Integer.parseInt(vista.stockTxt.getText()),
+                            vista.fechaCreacionDPiker.getDate(),
+                            vista.primeraTxt.getText(),
+                            Float.parseFloat(vista.segundaTxt.getText()),
+                            Boolean.parseBoolean(vista.terceraTxt.getText()),
+                            vista.cuartaTxt.getText());
+                }
+                else if (vista.iluminacionRadioButton.isSelected()) {
+                    modelo.altaIluminacion(
+                            vista.nombreTxt.getText(),
+                            vista.marcaTxt.getText(),
+                            Float.parseFloat(vista.precioTxt.getText()),
+                            Integer.parseInt(vista.stockTxt.getText()),
+                            vista.fechaCreacionDPiker.getDate(),
+                            vista.primeraTxt.getText(),
+                            Integer.parseInt(vista.segundaTxt.getText()),
+                            vista.terceraTxt.getText());
+                }
+                else {
+                    modelo.altaObjetivo(
+                            vista.nombreTxt.getText(),
+                            vista.marcaTxt.getText(),
+                            Float.parseFloat(vista.precioTxt.getText()),
+                            Integer.parseInt(vista.stockTxt.getText()),
+                            vista.fechaCreacionDPiker.getDate(),
+                            vista.primeraTxt.getText(),
+                            vista.segundaTxt.getText(),
+                            vista.terceraTxt.getText(),
+                            Boolean.parseBoolean(vista.cuartaTxt.getText()));
+                }
                 limpiarCampos();
                 refrescar();
                 break;
+
+            case "Exportar":
+                JFileChooser selectorFichero = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
+                int option = selectorFichero.showSaveDialog(null);
+
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        modelo.exportarXML(selectorFichero.getSelectedFile());
+                    } catch (ParserConfigurationException ex) {
+                        ex.printStackTrace();
+                    } catch (TransformerException ex) {
+                        ex.printStackTrace();
+                    }
+                    actualizarDatosConfiguracion(selectorFichero.getSelectedFile());
+                }
+
+                break;
+
+            case "Importar":
+                break;
+
+            case "Actualizar":
+                break;
+
+            case "Buscar":
+                break;
+
+            //RadioButtons
             case "Accesorio":
                 vista.cambiarPrimeraLbl.setText("Categoria");
                 vista.cambiarSegundaLbl.setText("Meterial Principal");
                 vista.cambiarTerceraLbl.setText("Peso Soportado Kg.");
                 vista.cambiarCuartaLbl.setText(null);
-                vista.cuartaTextField = null;
+                vista.cuartaTxt.setVisible(false);
+                vista.cambiarCuartaLbl.setVisible(false);
                 break;
 
             case "Camara":
@@ -126,14 +242,16 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 vista.cambiarSegundaLbl.setText("Resolucion Mpx");
                 vista.cambiarTerceraLbl.setText("Es Sin Espejo");
                 vista.cambiarCuartaLbl.setText("Resolucion Max Video");
+                vista.cuartaTxt.setVisible(true);
+                vista.cambiarCuartaLbl.setVisible(true);
                 break;
 
-            case "Iiluminacion":
+            case "Iluminacion":
                 vista.cambiarPrimeraLbl.setText("Tipo Luz");
                 vista.cambiarSegundaLbl.setText("Watios");
                 vista.cambiarTerceraLbl.setText("Temperatura Color");
-                vista.cambiarCuartaLbl.setText(null);
-                vista.cuartaTextField = null;
+                vista.cuartaTxt.setVisible(false);
+                vista.cambiarCuartaLbl.setVisible(false);
                 break;
 
             case "Objetivo":
@@ -141,6 +259,8 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 vista.cambiarSegundaLbl.setText("Apertura Max");
                 vista.cambiarTerceraLbl.setText("Tipo Montura");
                 vista.cambiarCuartaLbl.setText("Tiene Estabilizador");
+                vista.cuartaTxt.setVisible(true);
+                vista.cambiarCuartaLbl.setVisible(true);
                 break;
         }
     }

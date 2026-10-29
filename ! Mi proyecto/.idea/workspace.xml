@@ -17,10 +17,11 @@
   </component>
   <component name="ProjectId" id="3L2X8ECr6q5Zr7YuOM3clj3Jiky" />
   <component name="PropertiesComponent">
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="325" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../VehiculosMVC" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -83,6 +84,7 @@
       <workItem from="1793085223500" duration="691000" />
       <workItem from="1793125745422" duration="3360000" />
       <workItem from="1793257468880" duration="8674000" />
+      <workItem from="1793294385888" duration="9342000" />
     </task>
     <servers />
   </component>

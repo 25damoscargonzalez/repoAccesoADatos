@@ -1,5 +1,6 @@
 package com.oscargu.tiendamaterialfotografia.gui;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import com.oscargu.tiendamaterialfotografia.base.ProductoFotografico;
 
 import javax.swing.*;
@@ -14,10 +15,10 @@ public class Ventana {
     public JRadioButton iluminacionRadioButton;
     public JRadioButton objetivoRadioButton;
 
-    public JTextField nombreTextField;
-    public JTextField marcaTextField;
-    public JTextField precioTextField;
-    public JTextField stockTextField;
+    public JTextField nombreTxt;
+    public JTextField marcaTxt;
+    public JTextField precioTxt;
+    public JTextField stockTxt;
 
     public JButton nuevoButton;
     public JButton exportarButton;
@@ -32,10 +33,11 @@ public class Ventana {
     public JLabel cambiarTerceraLbl;
     public JLabel cambiarCuartaLbl;
 
-    public JTextField primeraTextField;
-    public JTextField segundaTextField;
-    public JTextField terceraTextField;
-    public JTextField cuartaTextField;
+    public JTextField primeraTxt;
+    public JTextField segundaTxt;
+    public JTextField terceraTxt;
+    public JTextField cuartaTxt;
+    public DatePicker fechaCreacionDPiker;
 
     //Atributos creados por mi
     public JFrame frame;
@@ -46,6 +48,7 @@ public class Ventana {
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
+        frame.setResizable(false);
         frame.setVisible(true);
         initComponents();
     }

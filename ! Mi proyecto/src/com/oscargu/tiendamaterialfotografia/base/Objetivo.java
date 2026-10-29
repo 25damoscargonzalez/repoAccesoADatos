@@ -44,7 +44,7 @@ public class Objetivo extends ProductoFotografico {
         this.tipoMontura = tipoMontura;
     }
 
-    public boolean isTieneEstabilizador() {
+    public boolean getTieneEstabilizador() {
         return tieneEstabilizador;
     }
 

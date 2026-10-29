@@ -36,7 +36,7 @@ public class Camara extends ProductoFotografico{
         this.resolucionMpx = resolucionMpx;
     }
 
-    public boolean isEsSinEspejo() {
+    public boolean getEsSinEspejo() {
         return esSinEspejo;
     }
 

@@ -42,7 +42,7 @@
     <colspec value="left:12dlu:noGrow"/>
     <colspec value="fill:max(d;4px):noGrow"/>
     <constraints>
-      <xy x="20" y="20" width="605" height="610"/>
+      <xy x="20" y="20" width="673" height="610"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -128,7 +128,7 @@
           <text value="Stock"/>
         </properties>
       </component>
-      <component id="a4ef2" class="javax.swing.JTextField" binding="nombreTextField">
+      <component id="a4ef2" class="javax.swing.JTextField" binding="nombreTxt">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -137,7 +137,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="9b2d" class="javax.swing.JTextField" binding="marcaTextField">
+      <component id="9b2d" class="javax.swing.JTextField" binding="marcaTxt">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -146,7 +146,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="439" class="javax.swing.JTextField" binding="precioTextField">
+      <component id="439" class="javax.swing.JTextField" binding="precioTxt">
         <constraints>
           <grid row="6" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -155,7 +155,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="c9aed" class="javax.swing.JTextField" binding="stockTextField">
+      <component id="c9aed" class="javax.swing.JTextField" binding="stockTxt">
         <constraints>
           <grid row="8" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -209,7 +209,7 @@
           <text value="Fecha Creacion"/>
         </properties>
       </component>
-      <component id="4db69" class="com.github.lgooddatepicker.components.DatePicker">
+      <component id="4db69" class="com.github.lgooddatepicker.components.DatePicker" binding="fechaCreacionDPiker">
         <constraints>
           <grid row="10" column="2" row-span="1" col-span="7" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
@@ -240,7 +240,7 @@
           <forms/>
         </constraints>
         <properties>
-          <text value="Para eliminar pulse &quot;supr&quot;"/>
+          <text value="Para eliminar un producto pulse &quot;supr&quot;"/>
         </properties>
       </component>
       <component id="fb19d" class="javax.swing.JLabel" binding="cambiarPrimeraLbl">
@@ -276,10 +276,10 @@
           <forms/>
         </constraints>
         <properties>
-          <text value="Nada"/>
+          <text value=""/>
         </properties>
       </component>
-      <component id="62713" class="javax.swing.JTextField" binding="primeraTextField">
+      <component id="62713" class="javax.swing.JTextField" binding="primeraTxt">
         <constraints>
           <grid row="12" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -288,7 +288,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="a2eeb" class="javax.swing.JTextField" binding="segundaTextField">
+      <component id="a2eeb" class="javax.swing.JTextField" binding="segundaTxt">
         <constraints>
           <grid row="14" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -297,7 +297,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="bdcdb" class="javax.swing.JTextField" binding="terceraTextField">
+      <component id="bdcdb" class="javax.swing.JTextField" binding="terceraTxt">
         <constraints>
           <grid row="16" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -306,7 +306,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="d6671" class="javax.swing.JTextField" binding="cuartaTextField">
+      <component id="d6671" class="javax.swing.JTextField" binding="cuartaTxt">
         <constraints>
           <grid row="18" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -317,4 +317,12 @@
       </component>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="productosButtonGroup">
+      <member id="60138"/>
+      <member id="e6a85"/>
+      <member id="7b730"/>
+      <member id="16829"/>
+    </group>
+  </buttonGroups>
 </form>
