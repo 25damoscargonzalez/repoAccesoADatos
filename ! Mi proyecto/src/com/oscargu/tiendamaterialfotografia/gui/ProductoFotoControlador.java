@@ -1,6 +1,7 @@
 package com.oscargu.tiendamaterialfotografia.gui;
 
-import com.oscargu.tiendamaterialfotografia.base.ProductoFotografico;
+import com.oscargu.tiendamaterialfotografia.base.*;
+import org.xml.sax.SAXException;
 import util.Util;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import javax.xml.transform.TransformerException;
 import java.awt.event.*;
 import java.io.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Properties;
 
 public class ProductoFotoControlador implements ActionListener, ListSelectionListener, WindowListener {
@@ -33,40 +35,16 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
         addWindowListener(this);
         addKeyListener();
 
+        //ComboBox BUSCAR
+        vista.buscarComboBox.addItem("Todos");
+        vista.buscarComboBox.addItem("Nombre");
+        vista.buscarComboBox.addItem("Marca");
+        vista.buscarComboBox.addItem("Tipo");
+
         //Marcamos por defecto el radioButton "Accesorio"
         vista.accesorioRadioButton.doClick();
 
     }
-
-    //Menu
-    private void exportar() {
-        JFileChooser selectorFichero = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
-        int opcion = selectorFichero.showSaveDialog(vista.frame);
-
-        if (opcion == JFileChooser.APPROVE_OPTION) {
-            File fichero = selectorFichero.getSelectedFile();
-            try {
-                modelo.exportarXML(fichero);
-                actualizarDatosConfiguracion(fichero);
-            } catch (ParserConfigurationException | TransformerException ex) {
-                Util.mensajeError("No se pudo exportar el fichero: " + ex.getMessage());
-            }
-        }
-    }
-
-    /*private void importar() {
-        JFileChooser selector = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
-        int opcion = selector.showOpenDialog(vista.frame);
-
-        if (opcion == JFileChooser.APPROVE_OPTION) {
-            try {
-                modelo.importarXML(selector.getSelectedFile());
-                refrescar();
-            } catch (ParserConfigurationException | SAXException | IOException ex) {
-                Util.mensajeError("No se pudo importar el fichero: " + ex.getMessage());
-            }
-        }
-    }*/
 
     //Detalles por producto con "enter"
     private void mostrarDetalleSeleccionado() {
@@ -114,9 +92,9 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
     //Funcion de todos los botones
     private void addActionListener(ActionListener listener) {
         vista.nuevoButton.addActionListener(listener);
+        vista.limpiarButton.addActionListener(listener);
         vista.exportarButton.addActionListener(listener);
         vista.importarButton.addActionListener(listener);
-        vista.actualizarButton.addActionListener(listener);
         vista.buscarButton.addActionListener(listener);
         vista.accesorioRadioButton.addActionListener(listener);
         vista.camaraRadioButton.addActionListener(listener);
@@ -205,10 +183,38 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
     }
 
     public void refrescar() {
+        mostrarEnLista(modelo.obtenerProductosFotograficos());
+    }
+
+    private void mostrarEnLista(List<ProductoFotografico> productos) {
         vista.dlmProductoFotografico.clear();
-        for (ProductoFotografico unProductoFotografico : modelo.obtenerProductosFotograficos()) {
-            vista.dlmProductoFotografico.addElement(unProductoFotografico);
+        for (ProductoFotografico producto : productos) {
+            vista.dlmProductoFotografico.addElement(producto);
         }
+    }
+
+    private void buscar() {
+        String opcionesDesplegable = (String) vista.buscarComboBox.getSelectedItem();
+        if (opcionesDesplegable == null || opcionesDesplegable.equals("Todos")) {
+            vista.buscarTxt.setText(null);
+            refrescar();
+            return;
+        }
+
+        String texto = vista.buscarTxt.getText();
+        if (texto.trim().isEmpty()) {
+            refrescar(); //Sin texto, mostramos todos
+            return;
+        }
+
+        List<ProductoFotografico> resultado = modelo.buscarProductosFotograficos(opcionesDesplegable, texto);
+
+        if (resultado.isEmpty()) {
+            JOptionPane.showMessageDialog(vista.frame, "No se ha encontrado ningun producto",
+                    "Buscar", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        mostrarEnLista(resultado);
     }
 
     @Override
@@ -246,6 +252,15 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                                 Float.parseFloat(vista.terceraTxt.getText()));
                     }
                     else if (vista.camaraRadioButton.isSelected()) {
+                        String esSinEspejo = vista.terceraTxt.getText();
+
+                        if (!esSinEspejo.equalsIgnoreCase("Si")
+                                && !esSinEspejo.equalsIgnoreCase("No")) {
+
+                            Util.mensajeError("El campo 'Es Sin Espejo' debe ser Si o No");
+                            return;
+                        }
+
                         modelo.altaCamara(
                                 vista.nombreTxt.getText(),
                                 vista.marcaTxt.getText(),
@@ -269,6 +284,15 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                                 vista.terceraTxt.getText());
                     }
                     else {
+                        String tieneEstabilizador = vista.cuartaTxt.getText();
+
+                        if (!tieneEstabilizador.equalsIgnoreCase("Si")
+                                && !tieneEstabilizador.equalsIgnoreCase("No")) {
+
+                            Util.mensajeError("El campo 'Tiene Estabilizador' debe ser Si o No");
+                            return;
+                        }
+
                         modelo.altaObjetivo(
                                 vista.nombreTxt.getText(),
                                 vista.marcaTxt.getText(),
@@ -289,23 +313,53 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 refrescar();
                 break;
 
+            case "Limpiar":
+                limpiarCampos();
+                break;
+
             case "Exportar":
             case "Exportar XML":
-                exportar();
+                JFileChooser selectorFichero = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
+                int opcion = selectorFichero.showSaveDialog(vista.frame);
+
+                if (opcion == JFileChooser.APPROVE_OPTION) {
+                    File fichero = selectorFichero.getSelectedFile();
+                    try {
+                        modelo.exportarXML(fichero);
+                        actualizarDatosConfiguracion(fichero);
+                    } catch (ParserConfigurationException | TransformerException ex) {
+                        Util.mensajeError("No se pudo exportar el fichero: " + ex.getMessage());
+                    }
+                }
                 break;
 
             case "Importar":
             case "Importar XML":
-                //importar();
-                break;
+                JFileChooser selectorFichero2 = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
+                int opcion2 = selectorFichero2.showOpenDialog(null);
 
-            case "Actualizar":
+                if (opcion2 == JFileChooser.APPROVE_OPTION) {
+                    File fichero2 = selectorFichero2.getSelectedFile();
+                    try {
+                        modelo.importarXML(fichero2);
+                        actualizarDatosConfiguracion(fichero2);
+
+                    } catch (ParserConfigurationException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    } catch (SAXException ex) {
+                        ex.printStackTrace();
+                    }
+                    refrescar();
+                }
                 break;
 
             case "Buscar":
+                buscar();
                 break;
 
-            //RadioButtons
+            //RadioButtons --> Botones especiales (Cuando pulsemos en un radioButton se cambiaran las etiquetas)
             case "Accesorio":
                 vista.cambiarPrimeraLbl.setText("Categoria");
                 vista.cambiarSegundaLbl.setText("Meterial Principal");
@@ -314,6 +368,10 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 vista.cuartaTxt.setVisible(false);
                 vista.cambiarCuartaLbl.setVisible(false);
 
+                vista.terceraTxt.setToolTipText(null);
+                vista.cuartaTxt.setToolTipText(null);
+
+                vista.cambiarImagen("/imagenes/foto_accesorio.jpg");
                 break;
 
             case "Camara":
@@ -323,6 +381,11 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 vista.cambiarCuartaLbl.setText("Resolucion Max Video");
                 vista.cuartaTxt.setVisible(true);
                 vista.cambiarCuartaLbl.setVisible(true);
+
+                vista.terceraTxt.setToolTipText("Escribe Si o No");
+                vista.cuartaTxt.setToolTipText(null);
+
+                vista.cambiarImagen("/imagenes/foto_camara.jpg");
                 break;
 
             case "Iluminacion":
@@ -331,6 +394,11 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 vista.cambiarTerceraLbl.setText("Temperatura Color");
                 vista.cuartaTxt.setVisible(false);
                 vista.cambiarCuartaLbl.setVisible(false);
+
+                vista.terceraTxt.setToolTipText(null);
+                vista.cuartaTxt.setToolTipText(null);
+
+                vista.cambiarImagen("/imagenes/foto_iluminacion.jpg");
                 break;
 
             case "Objetivo":
@@ -340,10 +408,16 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 vista.cambiarCuartaLbl.setText("Tiene Estabilizador");
                 vista.cuartaTxt.setVisible(true);
                 vista.cambiarCuartaLbl.setVisible(true);
+
+                vista.terceraTxt.setToolTipText(null);
+                vista.cuartaTxt.setToolTipText("Escribe Si o No");
+
+                vista.cambiarImagen("/imagenes/foto_objetivo.jpg");
                 break;
         }
     }
 
+    //Cerrar ventana cruz de windows
     @Override
     public void windowClosing(WindowEvent e) {
         int respuesta = Util.mensajeConfirmacion("¿Deseas cerrar la ventana?", "Salir");
@@ -358,9 +432,57 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
         }
     }
 
+    //Cambiar valores en el momento de seleccionar un producto fotografico
     @Override
-    public void valueChanged(ListSelectionEvent e) {
+    public void valueChanged(ListSelectionEvent eventoSeleccion) {
 
+        if (eventoSeleccion.getValueIsAdjusting()) {
+            ProductoFotografico producto = (ProductoFotografico) vista.list1.getSelectedValue();
+
+            vista.nombreTxt.setText(producto.getNombre());
+            vista.marcaTxt.setText(producto.getMarca());
+            vista.precioTxt.setText(String.valueOf(producto.getPrecio()));
+            vista.stockTxt.setText(String.valueOf(producto.getStock()));
+            vista.fechaCreacionDPiker.setDate(producto.getFechaCreacion());
+
+            if (producto instanceof Accesorio) {
+                vista.accesorioRadioButton.doClick();
+
+                Accesorio accesorio = (Accesorio) producto;
+                vista.primeraTxt.setText(accesorio.getCategoria());
+                vista.segundaTxt.setText(accesorio.getMaterialPrincipal());
+                vista.terceraTxt.setText(String.valueOf(accesorio.getPesoSoportadoKg()));
+            }
+
+            else if (producto instanceof Camara) {
+                vista.camaraRadioButton.doClick();
+
+                Camara camara = (Camara) producto;
+                vista.primeraTxt.setText(camara.getTipoSensor());
+                vista.segundaTxt.setText(String.valueOf(camara.getResolucionMpx()));
+                vista.terceraTxt.setText(String.valueOf(camara.getEsSinEspejo()));
+                vista.cuartaTxt.setText(camara.getResolucionMaxVideo());
+            }
+
+            else if (producto instanceof Iluminacion) {
+                vista.iluminacionRadioButton.doClick();
+
+                Iluminacion iluminacion = (Iluminacion) producto;
+                vista.primeraTxt.setText(iluminacion.getTipoLuz());
+                vista.segundaTxt.setText(String.valueOf(iluminacion.getWatios()));
+                vista.terceraTxt.setText(iluminacion.getTemperaturaColor());
+            }
+
+            else if (producto instanceof Objetivo) {
+                vista.objetivoRadioButton.doClick();
+
+                Objetivo objetivo = (Objetivo) producto;
+                vista.primeraTxt.setText(objetivo.getAlcanceLente());
+                vista.segundaTxt.setText(objetivo.getAperturaMax());
+                vista.terceraTxt.setText(objetivo.getTipoMontura());
+                vista.cuartaTxt.setText(String.valueOf(objetivo.getTieneEstabilizador()));
+            }
+        }
     }
 
     @Override

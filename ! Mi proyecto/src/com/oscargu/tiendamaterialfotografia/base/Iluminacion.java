@@ -43,6 +43,11 @@ public class Iluminacion extends ProductoFotografico {
     }
 
     @Override
+    public String toString() {
+        return "Iluminacion: " + getNombre() + " - " + getMarca() + " - " + getPrecio() + " - " + getStock();
+    }
+
+    @Override
     public String getDetalle() {
         return "Tipo: Iluminacion\n" + super.getDetalle()
                 + "\nTipo luz: " + tipoLuz

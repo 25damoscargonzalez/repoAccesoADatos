@@ -23,14 +23,14 @@
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:41px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:41px:noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:44px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:47px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:40px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:43px:noGrow"/>
-    <rowspec value="top:7dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:noGrow"/>
     <colspec value="left:12dlu:noGrow"/>
@@ -42,7 +42,7 @@
     <colspec value="left:12dlu:noGrow"/>
     <colspec value="fill:max(d;4px):noGrow"/>
     <constraints>
-      <xy x="20" y="20" width="673" height="679"/>
+      <xy x="20" y="20" width="673" height="673"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -175,7 +175,7 @@
       </component>
       <component id="fa0ce" class="javax.swing.JButton" binding="exportarButton" default-binding="true">
         <constraints>
-          <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -184,7 +184,7 @@
       </component>
       <component id="4a4cb" class="javax.swing.JButton" binding="importarButton" default-binding="true">
         <constraints>
-          <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -193,7 +193,7 @@
       </component>
       <component id="9e22a" class="javax.swing.JList" binding="list1" default-binding="true">
         <constraints>
-          <grid row="20" column="2" row-span="7" col-span="7" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="20" column="2" row-span="7" col-span="3" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
           <forms defaultalign-vert="false"/>
@@ -217,24 +217,6 @@
           <forms/>
         </constraints>
         <properties/>
-      </component>
-      <component id="1e79b" class="javax.swing.JButton" binding="actualizarButton" default-binding="true">
-        <constraints>
-          <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="Actualizar"/>
-        </properties>
-      </component>
-      <component id="50c67" class="javax.swing.JButton" binding="buscarButton" default-binding="true">
-        <constraints>
-          <grid row="28" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="Buscar"/>
-        </properties>
       </component>
       <component id="5a0d8" class="javax.swing.JLabel">
         <constraints>
@@ -306,27 +288,13 @@
           </grid>
           <forms defaultalign-horz="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <toolTipText value=""/>
+        </properties>
       </component>
       <component id="d6671" class="javax.swing.JTextField" binding="cuartaTxt">
         <constraints>
           <grid row="18" column="2" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-          <forms defaultalign-horz="false"/>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="4660d" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
-        <constraints>
-          <grid row="28" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="3eb2d" class="javax.swing.JTextField" binding="buscarTextField">
-        <constraints>
-          <grid row="28" column="6" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
           <forms defaultalign-horz="false"/>
@@ -340,6 +308,49 @@
         </constraints>
         <properties>
           <text value="+ Info del producto pulse &quot;enter&quot;"/>
+        </properties>
+      </component>
+      <component id="50c67" class="javax.swing.JButton" binding="buscarButton" default-binding="true">
+        <constraints>
+          <grid row="28" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Buscar"/>
+        </properties>
+      </component>
+      <component id="4660d" class="javax.swing.JComboBox" binding="buscarComboBox">
+        <constraints>
+          <grid row="28" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="3eb2d" class="javax.swing.JTextField" binding="buscarTxt">
+        <constraints>
+          <grid row="28" column="6" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="be186" class="javax.swing.JButton" binding="limpiarButton" default-binding="true">
+        <constraints>
+          <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Limpiar"/>
+        </properties>
+      </component>
+      <component id="71980" class="javax.swing.JLabel" binding="imagenLbl">
+        <constraints>
+          <grid row="20" column="6" row-span="7" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value=""/>
         </properties>
       </component>
     </children>

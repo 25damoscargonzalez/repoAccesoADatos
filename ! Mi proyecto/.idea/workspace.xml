@@ -22,7 +22,7 @@
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="325" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CocheComboBoxXML" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../VehiculosMVC" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -97,7 +97,7 @@
       <workItem from="1793446215606" duration="762000" />
       <workItem from="1793451205925" duration="1903000" />
       <workItem from="1793556979236" duration="302000" />
-      <workItem from="1793612376924" duration="6405000" />
+      <workItem from="1793612376924" duration="16499000" />
     </task>
     <servers />
   </component>

@@ -61,11 +61,6 @@ public abstract class ProductoFotografico {
         this.fechaCreacion = fechaCreacion;
     }
 
-    @Override
-    public String toString() {
-        return nombre + " - " + marca;
-    }
-
     public String getDetalle() {
         return "Nombre: " + nombre
                 + "\nMarca: " + marca

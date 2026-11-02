@@ -5,6 +5,8 @@ import com.oscargu.tiendamaterialfotografia.base.ProductoFotografico;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
+
 
 public class Ventana {
 
@@ -22,9 +24,9 @@ public class Ventana {
     public JTextField stockTxt;
 
     public JButton nuevoButton;
+    public JButton limpiarButton;
     public JButton exportarButton;
     public JButton importarButton;
-    public JButton actualizarButton;
     public JButton buscarButton;
 
     public JList list1;
@@ -34,21 +36,26 @@ public class Ventana {
     public JLabel cambiarTerceraLbl;
     public JLabel cambiarCuartaLbl;
 
+    public JLabel imagenLbl;
+
     public JTextField primeraTxt;
     public JTextField segundaTxt;
     public JTextField terceraTxt;
     public JTextField cuartaTxt;
 
-    public JTextField buscarTextField;
+    public JTextField buscarTxt;
 
     public DatePicker fechaCreacionDPiker;
-    public JComboBox comboBox1;
+    public JComboBox buscarComboBox;
 
     //Atributos creados por mi
     public JFrame frame;
     public DefaultListModel<ProductoFotografico> dlmProductoFotografico;
 
     public Ventana() {
+        panel1.setBackground(Color.LIGHT_GRAY);
+        panel1.setOpaque(true);
+
         frame = new JFrame("ProductosFotograficosMVC");
         frame.setContentPane(panel1);
         crearMenu();
@@ -81,5 +88,28 @@ public class Ventana {
         frame.setJMenuBar(barra);
     }
 
+    public void cambiarImagen(String rutaImagen) {
+        try {
+            // Carga la imagen usando el ClassLoader desde la ruta exacta del paquete
+            URL url = getClass().getResource(rutaImagen);
+
+            if (url != null) {
+                ImageIcon iconoOriginal = new ImageIcon(url);
+
+                // Escalamos la imagen para que encaje perfectamente dentro del JLabel sin deformarse
+                Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(
+                        imagenLbl.getWidth() > 0 ? imagenLbl.getWidth() : 150,
+                        imagenLbl.getHeight() > 0 ? imagenLbl.getHeight() : 150,
+                        java.awt.Image.SCALE_SMOOTH //alta calidad
+                );
+
+                imagenLbl.setIcon(new ImageIcon(imagenEscalada));
+            } else {
+                System.out.println("No se ha encontrado la imagen: " + rutaImagen);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

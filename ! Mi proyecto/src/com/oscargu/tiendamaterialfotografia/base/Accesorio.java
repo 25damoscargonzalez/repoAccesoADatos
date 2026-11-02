@@ -43,6 +43,11 @@ public class Accesorio extends ProductoFotografico {
     }
 
     @Override
+    public String toString() {
+        return "Accesorio: " + getNombre() + " - " + getMarca() + " - " + getPrecio() + " - " + getStock();
+    }
+
+    @Override
     public String getDetalle() {
         return "Tipo: Accesorio\n" + super.getDetalle()
                 + "\nCategoria: " + categoria

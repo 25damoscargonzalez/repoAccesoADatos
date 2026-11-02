@@ -53,6 +53,11 @@ public class Camara extends ProductoFotografico{
     }
 
     @Override
+    public String toString() {
+        return "Camara: " + getNombre() + " - " + getMarca() + " - " + getPrecio() + " - " + getStock();
+    }
+
+    @Override
     public String getDetalle() {
         return "Tipo: Camara\n" + super.getDetalle()
                 + "\nTipo sensor: " + tipoSensor
