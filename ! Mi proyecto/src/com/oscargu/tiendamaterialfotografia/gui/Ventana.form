@@ -21,16 +21,16 @@
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:34px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:41px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:44px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:47px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="center:40px:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:43px:noGrow"/>
+    <rowspec value="top:7dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:noGrow"/>
     <colspec value="left:12dlu:noGrow"/>
@@ -42,7 +42,7 @@
     <colspec value="left:12dlu:noGrow"/>
     <colspec value="fill:max(d;4px):noGrow"/>
     <constraints>
-      <xy x="20" y="20" width="673" height="610"/>
+      <xy x="20" y="20" width="673" height="679"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -193,12 +193,14 @@
       </component>
       <component id="9e22a" class="javax.swing.JList" binding="list1" default-binding="true">
         <constraints>
-          <grid row="20" column="2" row-span="9" col-span="7" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="20" column="2" row-span="7" col-span="7" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
           <forms defaultalign-vert="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <model/>
+        </properties>
       </component>
       <component id="cb26d" class="javax.swing.JLabel">
         <constraints>
@@ -314,6 +316,31 @@
           <forms defaultalign-horz="false"/>
         </constraints>
         <properties/>
+      </component>
+      <component id="4660d" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+        <constraints>
+          <grid row="28" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="3eb2d" class="javax.swing.JTextField" binding="buscarTextField">
+        <constraints>
+          <grid row="28" column="6" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <forms defaultalign-horz="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="97342" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="30" column="4" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="+ Info del producto pulse &quot;enter&quot;"/>
+        </properties>
       </component>
     </children>
   </grid>

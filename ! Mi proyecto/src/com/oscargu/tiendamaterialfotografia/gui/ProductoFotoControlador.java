@@ -8,10 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.Properties;
@@ -34,10 +31,125 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
         addActionListener(this);
         addListSelectionListener(this);
         addWindowListener(this);
+        addKeyListener();
 
         //Marcamos por defecto el radioButton "Accesorio"
         vista.accesorioRadioButton.doClick();
 
+    }
+
+    //Menu
+    private void exportar() {
+        JFileChooser selectorFichero = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
+        int opcion = selectorFichero.showSaveDialog(vista.frame);
+
+        if (opcion == JFileChooser.APPROVE_OPTION) {
+            File fichero = selectorFichero.getSelectedFile();
+            try {
+                modelo.exportarXML(fichero);
+                actualizarDatosConfiguracion(fichero);
+            } catch (ParserConfigurationException | TransformerException ex) {
+                Util.mensajeError("No se pudo exportar el fichero: " + ex.getMessage());
+            }
+        }
+    }
+
+    /*private void importar() {
+        JFileChooser selector = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
+        int opcion = selector.showOpenDialog(vista.frame);
+
+        if (opcion == JFileChooser.APPROVE_OPTION) {
+            try {
+                modelo.importarXML(selector.getSelectedFile());
+                refrescar();
+            } catch (ParserConfigurationException | SAXException | IOException ex) {
+                Util.mensajeError("No se pudo importar el fichero: " + ex.getMessage());
+            }
+        }
+    }*/
+
+    //Detalles por producto con "enter"
+    private void mostrarDetalleSeleccionado() {
+        ProductoFotografico seleccionado = (ProductoFotografico) vista.list1.getSelectedValue();
+        if (seleccionado == null) {
+            return;
+        }
+        JOptionPane.showMessageDialog(vista.frame, seleccionado.getDetalle(),
+                "Detalle del producto", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    //Eliminar producto fotografico con "supr"
+    private void eliminarSeleccionado() {
+        ProductoFotografico seleccionado = (ProductoFotografico) vista.list1.getSelectedValue();
+        if (seleccionado == null) {
+            return;
+        }
+        int respuesta = JOptionPane.showConfirmDialog(vista.frame,
+                "Eliminar el producto seleccionado?\n" + seleccionado,
+                "Confirmar borrado", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            modelo.eliminarProductoFotografico(seleccionado);
+            refrescar();
+        }
+    }
+
+    //Añadir teclas
+    private void addKeyListener() {
+        vista.list1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    mostrarDetalleSeleccionado();
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    eliminarSeleccionado();
+                }
+            }
+        });
+    }
+
+    //Funcion de todos los botones
+    private void addActionListener(ActionListener listener) {
+        vista.nuevoButton.addActionListener(listener);
+        vista.exportarButton.addActionListener(listener);
+        vista.importarButton.addActionListener(listener);
+        vista.actualizarButton.addActionListener(listener);
+        vista.buscarButton.addActionListener(listener);
+        vista.accesorioRadioButton.addActionListener(listener);
+        vista.camaraRadioButton.addActionListener(listener);
+        vista.iluminacionRadioButton.addActionListener(listener);
+        vista.objetivoRadioButton.addActionListener(listener);
+
+        vista.itemExportar.addActionListener(listener);
+        vista.itemImportar.addActionListener(listener);
+    }
+
+    private void addListSelectionListener (ListSelectionListener listener) {
+        vista.list1.addListSelectionListener(listener);
+    }
+
+    private void addWindowListener (WindowListener listener) {
+        vista.frame.addWindowListener(listener); //frame, el boton de cerrar esta en la ventanita de fuera de la ventana
+    }
+
+    //Configuracion
+    private void cargarDatosConfiguracion() throws IOException {
+        Properties configuracion = new Properties();
+        configuracion.load(new FileReader("vehiculos.conf"));
+        ultimaRutaExportada = new File(configuracion.getProperty("ultimaRutaExportada"));
+    }
+
+    private void actualizarDatosConfiguracion (File ultimaRutaExportada) {
+        this.ultimaRutaExportada = ultimaRutaExportada;
+    }
+
+    private void guardarDatosConfiguracion () throws IOException {
+        Properties configuracion = new Properties();
+        configuracion.setProperty("ultimaRutaExportada", ultimaRutaExportada.getAbsolutePath());
+        configuracion.store(new PrintWriter("vehiculos.conf"), "Datos configuracion vehiculos");
     }
 
     private String hayCamposVacios() {
@@ -99,42 +211,6 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
         }
     }
 
-    private void addActionListener(ActionListener listener) {
-        vista.nuevoButton.addActionListener(listener);
-        vista.exportarButton.addActionListener(listener);
-        vista.importarButton.addActionListener(listener);
-        vista.actualizarButton.addActionListener(listener);
-        vista.buscarButton.addActionListener(listener);
-        vista.accesorioRadioButton.addActionListener(listener);
-        vista.camaraRadioButton.addActionListener(listener);
-        vista.iluminacionRadioButton.addActionListener(listener);
-        vista.objetivoRadioButton.addActionListener(listener);
-    }
-
-    private void addListSelectionListener (ListSelectionListener listener) {
-        vista.list1.addListSelectionListener(listener);
-    }
-
-    private void addWindowListener (WindowListener listener) {
-        vista.frame.addWindowListener(listener); //frame, el boton de cerrar esta en la ventanita de fuera de la ventana
-    }
-
-    private void cargarDatosConfiguracion() throws IOException {
-        Properties configuracion = new Properties();
-        configuracion.load(new FileReader("vehiculos.conf"));
-        ultimaRutaExportada = new File(configuracion.getProperty("ultimaRutaExportada"));
-    }
-
-    private void actualizarDatosConfiguracion (File ultimaRutaExportada) {
-        this.ultimaRutaExportada = ultimaRutaExportada;
-    }
-
-    private void guardarDatosConfiguracion () throws IOException {
-        Properties configuracion = new Properties();
-        configuracion.setProperty("ultimaRutaExportada", ultimaRutaExportada.getAbsolutePath());
-        configuracion.store(new PrintWriter("vehiculos.conf"), "Datos configuracion vehiculos");
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionComand = e.getActionCommand();
@@ -151,74 +227,76 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                     break;
                 }
 
-                if (vista.accesorioRadioButton.isSelected()) {
-                    modelo.altaAccesorio(
-                            vista.nombreTxt.getText(),
-                            vista.marcaTxt.getText(),
-                            Float.parseFloat(vista.precioTxt.getText()),
-                            Integer.parseInt(vista.stockTxt.getText()),
-                            vista.fechaCreacionDPiker.getDate(),
-                            vista.primeraTxt.getText(),
-                            vista.segundaTxt.getText(),
-                            Float.parseFloat(vista.terceraTxt.getText()));
+                try {
+                    String nombre = vista.nombreTxt.getText();
+                    String marca = vista.marcaTxt.getText();
+                    float precio = Float.parseFloat(vista.precioTxt.getText());
+                    int stock = Integer.parseInt(vista.stockTxt.getText());
+                    LocalDate fecha = vista.fechaCreacionDPiker.getDate();
+
+                    if (vista.accesorioRadioButton.isSelected()) {
+                        modelo.altaAccesorio(
+                                vista.nombreTxt.getText(),
+                                vista.marcaTxt.getText(),
+                                Float.parseFloat(vista.precioTxt.getText()),
+                                Integer.parseInt(vista.stockTxt.getText()),
+                                vista.fechaCreacionDPiker.getDate(),
+                                vista.primeraTxt.getText(),
+                                vista.segundaTxt.getText(),
+                                Float.parseFloat(vista.terceraTxt.getText()));
+                    }
+                    else if (vista.camaraRadioButton.isSelected()) {
+                        modelo.altaCamara(
+                                vista.nombreTxt.getText(),
+                                vista.marcaTxt.getText(),
+                                Float.parseFloat(vista.precioTxt.getText()),
+                                Integer.parseInt(vista.stockTxt.getText()),
+                                vista.fechaCreacionDPiker.getDate(),
+                                vista.primeraTxt.getText(),
+                                Float.parseFloat(vista.segundaTxt.getText()),
+                                Boolean.parseBoolean(vista.terceraTxt.getText()),
+                                vista.cuartaTxt.getText());
+                    }
+                    else if (vista.iluminacionRadioButton.isSelected()) {
+                        modelo.altaIluminacion(
+                                vista.nombreTxt.getText(),
+                                vista.marcaTxt.getText(),
+                                Float.parseFloat(vista.precioTxt.getText()),
+                                Integer.parseInt(vista.stockTxt.getText()),
+                                vista.fechaCreacionDPiker.getDate(),
+                                vista.primeraTxt.getText(),
+                                Integer.parseInt(vista.segundaTxt.getText()),
+                                vista.terceraTxt.getText());
+                    }
+                    else {
+                        modelo.altaObjetivo(
+                                vista.nombreTxt.getText(),
+                                vista.marcaTxt.getText(),
+                                Float.parseFloat(vista.precioTxt.getText()),
+                                Integer.parseInt(vista.stockTxt.getText()),
+                                vista.fechaCreacionDPiker.getDate(),
+                                vista.primeraTxt.getText(),
+                                vista.segundaTxt.getText(),
+                                vista.terceraTxt.getText(),
+                                Boolean.parseBoolean(vista.cuartaTxt.getText()));
+                    }
+                } catch (NumberFormatException ex) {
+                    Util.mensajeError("Hay campos con un formato no valido");
+                    return; // No limpiamos para que el usuario pueda corregir los fallos
                 }
-                else if (vista.camaraRadioButton.isSelected()) {
-                    modelo.altaCamara(
-                            vista.nombreTxt.getText(),
-                            vista.marcaTxt.getText(),
-                            Float.parseFloat(vista.precioTxt.getText()),
-                            Integer.parseInt(vista.stockTxt.getText()),
-                            vista.fechaCreacionDPiker.getDate(),
-                            vista.primeraTxt.getText(),
-                            Float.parseFloat(vista.segundaTxt.getText()),
-                            Boolean.parseBoolean(vista.terceraTxt.getText()),
-                            vista.cuartaTxt.getText());
-                }
-                else if (vista.iluminacionRadioButton.isSelected()) {
-                    modelo.altaIluminacion(
-                            vista.nombreTxt.getText(),
-                            vista.marcaTxt.getText(),
-                            Float.parseFloat(vista.precioTxt.getText()),
-                            Integer.parseInt(vista.stockTxt.getText()),
-                            vista.fechaCreacionDPiker.getDate(),
-                            vista.primeraTxt.getText(),
-                            Integer.parseInt(vista.segundaTxt.getText()),
-                            vista.terceraTxt.getText());
-                }
-                else {
-                    modelo.altaObjetivo(
-                            vista.nombreTxt.getText(),
-                            vista.marcaTxt.getText(),
-                            Float.parseFloat(vista.precioTxt.getText()),
-                            Integer.parseInt(vista.stockTxt.getText()),
-                            vista.fechaCreacionDPiker.getDate(),
-                            vista.primeraTxt.getText(),
-                            vista.segundaTxt.getText(),
-                            vista.terceraTxt.getText(),
-                            Boolean.parseBoolean(vista.cuartaTxt.getText()));
-                }
+
                 limpiarCampos();
                 refrescar();
                 break;
 
             case "Exportar":
-                JFileChooser selectorFichero = Util.crearSelectorFichero(ultimaRutaExportada, "Archivos XML", "xml");
-                int option = selectorFichero.showSaveDialog(null);
-
-                if (option == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        modelo.exportarXML(selectorFichero.getSelectedFile());
-                    } catch (ParserConfigurationException ex) {
-                        ex.printStackTrace();
-                    } catch (TransformerException ex) {
-                        ex.printStackTrace();
-                    }
-                    actualizarDatosConfiguracion(selectorFichero.getSelectedFile());
-                }
-
+            case "Exportar XML":
+                exportar();
                 break;
 
             case "Importar":
+            case "Importar XML":
+                //importar();
                 break;
 
             case "Actualizar":
@@ -235,6 +313,7 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
                 vista.cambiarCuartaLbl.setText(null);
                 vista.cuartaTxt.setVisible(false);
                 vista.cambiarCuartaLbl.setVisible(false);
+
                 break;
 
             case "Camara":
@@ -267,7 +346,16 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
 
     @Override
     public void windowClosing(WindowEvent e) {
+        int respuesta = Util.mensajeConfirmacion("¿Deseas cerrar la ventana?", "Salir");
 
+        if (respuesta == JOptionPane.OK_OPTION) { //OK_OPTION = SI, es decir, si respuesta es igual a "si", se cerrara
+            try {
+                guardarDatosConfiguracion();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            System.exit(0); //Salimos de la aplicacion COMPLETO
+        }
     }
 
     @Override

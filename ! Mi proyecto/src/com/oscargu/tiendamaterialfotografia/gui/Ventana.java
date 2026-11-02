@@ -4,6 +4,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.oscargu.tiendamaterialfotografia.base.ProductoFotografico;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Ventana {
 
@@ -37,7 +38,11 @@ public class Ventana {
     public JTextField segundaTxt;
     public JTextField terceraTxt;
     public JTextField cuartaTxt;
+
+    public JTextField buscarTextField;
+
     public DatePicker fechaCreacionDPiker;
+    public JComboBox comboBox1;
 
     //Atributos creados por mi
     public JFrame frame;
@@ -46,9 +51,11 @@ public class Ventana {
     public Ventana() {
         frame = new JFrame("ProductosFotograficosMVC");
         frame.setContentPane(panel1);
+        crearMenu();
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         initComponents();
     }
@@ -57,5 +64,22 @@ public class Ventana {
         dlmProductoFotografico = new DefaultListModel<ProductoFotografico>();
         list1.setModel(dlmProductoFotografico);
     }
+
+    //Menu
+    public JMenuItem itemExportar;
+    public JMenuItem itemImportar;
+
+    private void crearMenu() {
+        JMenuBar barra = new JMenuBar();
+        JMenu menu = new JMenu("Archivo");
+        itemExportar = new JMenuItem("Exportar XML");
+        itemImportar = new JMenuItem("Importar XML");
+
+        menu.add(itemExportar);
+        menu.add(itemImportar);
+        barra.add(menu);
+        frame.setJMenuBar(barra);
+    }
+
 
 }

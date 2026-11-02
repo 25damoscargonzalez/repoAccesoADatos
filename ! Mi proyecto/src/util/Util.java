@@ -22,4 +22,8 @@ public class Util {
         }
         return selectorFichero;
     }
+
+    public static int mensajeConfirmacion(String mensaje, String titulo) {
+        return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.YES_NO_OPTION); //Elige SI o NO
+    }
 }

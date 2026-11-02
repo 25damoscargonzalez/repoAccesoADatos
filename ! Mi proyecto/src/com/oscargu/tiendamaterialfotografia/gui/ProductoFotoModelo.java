@@ -202,4 +202,13 @@ public class ProductoFotoModelo {
 
 
     }
+
+    public void importarXML(File selectedFile) {
+    }
+
+    public void eliminarProductoFotografico(ProductoFotografico seleccionado) {
+        listaProductosFotograficos.remove(seleccionado);
+    }
+
+
 }

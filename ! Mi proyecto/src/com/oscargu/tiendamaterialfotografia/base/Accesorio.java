@@ -43,16 +43,11 @@ public class Accesorio extends ProductoFotografico {
     }
 
     @Override
-    public String toString() {
-        return "Accesorio=\n" +
-                "nombre='" + getNombre() + '\'' +
-                ", marca='" + getMarca() + '\'' +
-                ", precio='" + getPrecio() + '\'' +
-                ", stock='" + getStock() + '\'' +
-                ", fechaCreacion='" + getFechaCreacion() + "\'" +
-                ", categoria='" + categoria + '\'' +
-                ", materialPrincipal='" + materialPrincipal + '\'' +
-                ", pesoSoportadoKg=" + pesoSoportadoKg;
+    public String getDetalle() {
+        return "Tipo: Accesorio\n" + super.getDetalle()
+                + "\nCategoria: " + categoria
+                + "\nMaterial principal: " + materialPrincipal
+                + "\nPeso soportado: " + pesoSoportadoKg + " Kg.";
     }
 
 }

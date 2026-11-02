@@ -53,17 +53,11 @@ public class Objetivo extends ProductoFotografico {
     }
 
     @Override
-    public String toString() {
-        return "Objetivo=\n" +
-                "nombre='" + getNombre() + '\'' +
-                ", marca='" + getMarca() + '\'' +
-                ", precio='" + getPrecio() + '\'' +
-                ", stock='" + getStock() + '\'' +
-                ", fechaCreacion='" + getFechaCreacion() + "\'" +
-                ", alcanceLente='" + alcanceLente + '\'' +
-                ", aperturaMax='" + aperturaMax + '\'' +
-                ", tipoMontura='" + tipoMontura + '\'' +
-                ", tieneEstabilizador='" + tieneEstabilizador + '\'';
+    public String getDetalle() {
+        return "Tipo: Objetivo\n" + super.getDetalle()
+                + "\nAlcance Lente: " + alcanceLente
+                + "\nApertura Max: " + aperturaMax
+                + "\nTipo Montura: " + tipoMontura
+                + "\nTiene Estabilizador: " + tieneEstabilizador;
     }
-
 }

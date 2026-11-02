@@ -60,4 +60,18 @@ public abstract class ProductoFotografico {
     public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
+
+    @Override
+    public String toString() {
+        return nombre + " - " + marca;
+    }
+
+    public String getDetalle() {
+        return "Nombre: " + nombre
+                + "\nMarca: " + marca
+                + "\nPrecio: " + precio
+                + "\nStock: " + stock
+                + "\nFecha creacion: " + fechaCreacion;
+    }
+
 }

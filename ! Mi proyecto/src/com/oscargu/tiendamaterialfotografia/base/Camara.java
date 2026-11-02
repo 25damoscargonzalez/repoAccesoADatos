@@ -53,16 +53,11 @@ public class Camara extends ProductoFotografico{
     }
 
     @Override
-    public String toString() {
-        return "Camara=\n" +
-                "nombre='" + getNombre() + '\'' +
-                ", marca='" + getMarca() + '\'' +
-                ", precio='" + getPrecio() + '\'' +
-                ", stock='" + getStock() + '\'' +
-                ", fechaCreacion='" + getFechaCreacion() + "\'" +
-                ", tipoSensor='" + tipoSensor + '\'' +
-                ", resolucionMpx='" + resolucionMpx + '\'' +
-                ", esSinEspejo='" + esSinEspejo + '\'' +
-                ", resolucionMaxVideo='" + resolucionMaxVideo + '\'';
+    public String getDetalle() {
+        return "Tipo: Camara\n" + super.getDetalle()
+                + "\nTipo sensor: " + tipoSensor
+                + "\nResolucion Mpx: " + resolucionMpx
+                + "\nEs sin espejo: " + esSinEspejo
+                + "\nResolucion Max Video: " + resolucionMaxVideo;
     }
 }
