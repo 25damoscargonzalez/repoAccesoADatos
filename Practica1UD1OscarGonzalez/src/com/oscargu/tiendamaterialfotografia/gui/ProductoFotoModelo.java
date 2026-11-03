@@ -61,13 +61,13 @@ public class ProductoFotoModelo {
         return false;
     }
 
-    public List<ProductoFotografico> buscarProductosFotograficos(String criterio, String texto) {
+    public List<ProductoFotografico> buscarProductosFotograficos(String opcionesDesplegable, String texto) {
         List<ProductoFotografico> resultado = new ArrayList<>();
         String buscado = texto.trim().toLowerCase();
 
         for (ProductoFotografico producto : obtenerProductosFotograficos()) {
             String valor;
-            switch (criterio) {
+            switch (opcionesDesplegable) {
                 case "Nombre":
                     valor = producto.getNombre();
                     break;
@@ -306,9 +306,7 @@ public class ProductoFotoModelo {
 
     public void eliminarProductoFotografico(ProductoFotografico seleccionado) {
         listaProductosFotograficos.remove(seleccionado);
+
     }
-
-
-
 
 }

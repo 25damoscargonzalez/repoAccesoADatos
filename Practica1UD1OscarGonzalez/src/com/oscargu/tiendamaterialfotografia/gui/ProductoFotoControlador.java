@@ -116,7 +116,7 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
     //Configuracion
     private void cargarDatosConfiguracion() throws IOException {
         Properties configuracion = new Properties();
-        configuracion.load(new FileReader("vehiculos.conf"));
+        configuracion.load(new FileReader("productosFotograficos.conf"));
         ultimaRutaExportada = new File(configuracion.getProperty("ultimaRutaExportada"));
     }
 
@@ -127,7 +127,7 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
     private void guardarDatosConfiguracion () throws IOException {
         Properties configuracion = new Properties();
         configuracion.setProperty("ultimaRutaExportada", ultimaRutaExportada.getAbsolutePath());
-        configuracion.store(new PrintWriter("vehiculos.conf"), "Datos configuracion vehiculos");
+        configuracion.store(new PrintWriter("productosFotograficos.conf"), "Datos configuracion vehiculos");
     }
 
     private String hayCamposVacios() {
@@ -195,6 +195,7 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
 
     private void buscar() {
         String opcionesDesplegable = (String) vista.buscarComboBox.getSelectedItem();
+
         if (opcionesDesplegable == null || opcionesDesplegable.equals("Todos")) {
             vista.buscarTxt.setText(null);
             refrescar();
@@ -203,7 +204,7 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
 
         String texto = vista.buscarTxt.getText();
         if (texto.trim().isEmpty()) {
-            refrescar(); //Sin texto, mostramos todos
+            refrescar(); //Sin texto, tambien se muestra todo
             return;
         }
 
@@ -370,8 +371,6 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
 
                 vista.terceraTxt.setToolTipText(null);
                 vista.cuartaTxt.setToolTipText(null);
-
-                vista.cambiarImagen("/imagenes/foto_accesorio.jpg");
                 break;
 
             case "Camara":
@@ -384,8 +383,6 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
 
                 vista.terceraTxt.setToolTipText("Escribe Si o No");
                 vista.cuartaTxt.setToolTipText(null);
-
-                vista.cambiarImagen("/imagenes/foto_camara.jpg");
                 break;
 
             case "Iluminacion":
@@ -397,8 +394,6 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
 
                 vista.terceraTxt.setToolTipText(null);
                 vista.cuartaTxt.setToolTipText(null);
-
-                vista.cambiarImagen("/imagenes/foto_iluminacion.jpg");
                 break;
 
             case "Objetivo":
@@ -411,8 +406,6 @@ public class ProductoFotoControlador implements ActionListener, ListSelectionLis
 
                 vista.terceraTxt.setToolTipText(null);
                 vista.cuartaTxt.setToolTipText("Escribe Si o No");
-
-                vista.cambiarImagen("/imagenes/foto_objetivo.jpg");
                 break;
         }
     }

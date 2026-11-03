@@ -193,7 +193,7 @@
       </component>
       <component id="9e22a" class="javax.swing.JList" binding="list1" default-binding="true">
         <constraints>
-          <grid row="20" column="2" row-span="7" col-span="3" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="20" column="2" row-span="7" col-span="7" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
           <forms defaultalign-vert="false"/>
@@ -342,15 +342,6 @@
         </constraints>
         <properties>
           <text value="Limpiar"/>
-        </properties>
-      </component>
-      <component id="71980" class="javax.swing.JLabel" binding="imagenLbl">
-        <constraints>
-          <grid row="20" column="6" row-span="7" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value=""/>
         </properties>
       </component>
     </children>
